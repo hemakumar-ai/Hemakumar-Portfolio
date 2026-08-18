@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hemakumar P | ECE & IoT Portfolio</title>
+    <style>
+        :root {
+            --bg: #0b0c10;
+            --card-bg: #12141d;
+            --card-border: #1f2430;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent-cyan: #64ffda;
+            --accent-purple: #a78bfa;
+            --accent-blue: #3b82f6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 8%;
+            background: rgba(11, 12, 16, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            letter-spacing: 1px;
+            font-family: monospace;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* Container Layout */
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Scroll Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Section Subtitles / Headers */
+        .section-prefix {
+            font-family: monospace;
+            color: var(--accent-cyan);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 2.5rem;
+        }
+
+        /* Hero Section with Photo Layout */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            padding-top: 5rem;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+            width: 100%;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            background: rgba(100, 255, 218, 0.05);
+            border: 1px solid rgba(100, 255, 218, 0.2);
+            color: var(--accent-cyan);
+            font-size: 0.85rem;
+            font-family: monospace;
+            margin-bottom: 1.5rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-cyan);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+        }
+
+        .hero h1 .name {
+            color: var(--accent-purple);
+            display: block;
+        }
+
+        .hero-desc {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Profile Photo Styling */
+        .hero-image-wrapper {
+            position: relative;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-img {
+            width: 270px;
+            height: 270px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--accent-cyan);
+            box-shadow: 0 0 25px rgba(100, 255, 218, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero-img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 35px rgba(100, 255, 218, 0.45);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-purple);
+            color: #000;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #b89eff;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: border-color 0.2s;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .quote-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-left: 3px solid var(--accent-purple);
+            padding: 1.8rem;
+            border-radius: 10px;
+        }
+
+        .quote-card p {
+            font-style: italic;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .quote-card .info {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.2rem;
+            border-radius: 8px;
+            transition: border-color 0.3s;
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent-cyan);
+        }
+
+        .skill-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .skill-level {
+            font-size: 0.8rem;
+            font-family: monospace;
+            color: var(--accent-cyan);
+        }
+
+        /* Projects Section */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.8rem;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .project-tag {
+            font-size: 0.75rem;
+            font-family: monospace;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tech-tag {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-family: monospace;
+            color: var(--text-muted);
+        }
+
+        /* Languages Progress */
+        .languages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .lang-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.2rem;
+            border-radius: 8px;
+        }
+
+        .progress-bar {
+            background-color: var(--card-border);
+            height: 6px;
+            border-radius: 3px;
+            margin-top: 0.5rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background-color: var(--accent-cyan);
+            height: 100%;
+        }
+
+        /* Certificates & Education */
+        .cert-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 1.2rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cert-card a {
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+
+        /* Timeline */
+        .timeline {
+            border-left: 2px solid var(--card-border);
+            padding-left: 1.5rem;
+            margin-left: 0.5rem;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -1.95rem;
+            top: 0.25rem;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-cyan);
+            border-radius: 50%;
+        }
+
+        .timeline-date {
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+        }
+
+        /* Contact Section */
+        .contact-box {
+            text-align: center;
+            padding: 4rem 2rem;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+        }
+
+        .contact-email {
+            font-size: 1.3rem;
+            font-family: monospace;
+            color: var(--accent-cyan);
+            margin: 1.5rem 0;
+            display: block;
+            text-decoration: none;
+        }
+
+        .social-btns {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem 0;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: monospace;
+            border-top: 1px solid var(--card-border);
+            margin-top: 5rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-container {
+                flex-direction: column-reverse;
+                text-align: center;
+                gap: 2rem;
+            }
+            .hero h1 { font-size: 2.5rem; }
+            .hero-btns { justify-content: center; }
+            .hero-img {
+                width: 200px;
+                height: 200px;
+            }
+            .about-grid { grid-template-columns: 1fr; }
+            .cert-card { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">&lt;HK&gt;</div>
+        <ul class="nav-links">
+            <li><a href="#about">about</a></li>
+            <li><a href="#skills">skills</a></li>
+            <li><a href="#projects">projects</a></li>
+            <li><a href="#education">education</a></li>
+            <li><a href="#contact">contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section with Photo -->
+        <section class="hero reveal">
+            <div class="hero-container">
+                <div class="hero-text">
+                    <div class="hero-badge"><span class="dot"></span> Open to opportunities</div>
+                    <h1>Hello, I'm <span class="name">HEMAKUMAR P</span></h1>
+                    <p class="hero-desc">I am an Electronics and Communication Engineering student passionate about IoT, embedded systems, and intelligent automation.</p>
+                    <div class="hero-btns">
+                        <a href="#projects" class="btn-primary">View my work &rarr;</a>
+                        <a href="#contact" class="btn-secondary">Get in touch</a>
+                    </div>
+                </div>
+
+                <div class="hero-image-wrapper">
+                    <!-- Change profile.jpg to your image filename if different -->
+                    <img src="karthi.jpg" alt="Hemakumar P" class="hero-img">
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="reveal" style="padding: 4rem 0;">
+            <div class="section-prefix">01 &mdash; WHO I AM</div>
+            <h2 class="section-title">In the making</h2>
+            <div class="about-grid">
+                <div>
+                    <p style="margin-bottom: 1rem; color: var(--text-muted);">
+                        I design and develop intelligent embedded systems and IoT solutions that connect the physical and digital worlds.
+                    </p>
+                    <p style="color: var(--text-muted);">
+                        As an ECE student, I'm passionate about electronics, programming, and innovation, with a focus on building reliable, efficient, and impactful technology.
+                    </p>
+                </div>
+                <div class="quote-card">
+                    <p>"I see every hardware constraint as an opportunity. I enjoy experimenting with embedded ideas and turning them into real-world solutions."</p>
+                    <div class="info">&mdash; Hemakumar P &bull; B.E. ECE (2023 - 2027)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="reveal" style="padding: 4rem 0;">
+            <div class="section-prefix">02 &mdash; WHAT I WORK WITH</div>
+            <h2 class="section-title">Skills & tools</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-name">Arduino</div>
+                    <div class="skill-level">embedded / proficient</div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-name">ESP32</div>
+                    <div class="skill-level">iot / proficient</div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-name">Python</div>
+                    <div class="skill-level">programming / core</div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-name">C</div>
+                    <div class="skill-level">firmware / proficient</div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-name">Sensor Interfacing</div>
+                    <div class="skill-level">hardware / specialized</div>
+                </div>
+                <div class="skill-card">
+                    <div class="skill-name">Figma</div>
+                    <div class="skill-level">design / basic</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="reveal" style="padding: 4rem 0;">
+            <div class="section-prefix">03 &mdash; WHAT I'VE BUILT</div>
+            <h2 class="section-title">Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div>
+                        <div class="project-tag">PROJECT 001 &bull; EMBEDDED SYSTEM</div>
+                        <h3>Anti Diesel Theft Alarm</h3>
+                        <p>The proposed Anti Diesel Theft Alarm System is designed to detect diesel theft in real time using an embedded monitoring approach.</p>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tech-tag">Embedded C</span>
+                        <span class="tech-tag">Sensors</span>
+                        <span class="tech-tag">IoT</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div>
+                        <div class="project-tag">PROJECT 002 &bull; SMART AUTOMATION</div>
+                        <h3>Traditional Fan into Smart Fan</h3>
+                        <p>A budget-friendly transformation of an ordinary fan into a smart home appliance with automated/remote controls.</p>
+                    </div>
+                    <div class="tech-tags">
+                        <span class="tech-tag">ESP32</span>
+                        <span class="tech-tag">Microcontrollers</span>
+                        <span class="tech-tag">Automation</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Languages Section -->
+        <section class="reveal" style="padding: 4rem 0;">
+            <div class="section-prefix">04 &mdash; COMMUNICATION</div>
+            <h2 class="section-title">Languages</h2>
+            <div class="languages-grid">
+                <div class="lang-card">
+                    <div style="display: flex; justify-content: space-between;">
+                        <strong>Tamil</strong>
+                        <span style="font-family: monospace; color: var(--accent-cyan);">100%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
+                </div>
+                <div class="lang-card">
+                    <div style="display: flex; justify-content: space-between;">
+                        <strong>English</strong>
+                        <span style="font-family: monospace; color: var(--accent-cyan);">60%</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 60%;"></div></div>
+                </div>
+                <div class="lang-card">
+                    <div style="display: flex; justify-content: space-between;">
+                        <strong>German</strong>
+                        <span style="font-family: monospace; color: var(--accent-cyan);">Basic (20%)</span>
+                    </div>
+                    <div class="progress-bar"><div class="progress-fill" style="width: 20%;"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section class="reveal" style="padding: 4rem 0;">
+            <div class="section-prefix">05 &mdash; CREDENTIALS & ACTIVITIES</div>
+            <h2 class="section-title">Certifications</h2>
+            <div class="cert-card">
+                <div>
+                    <strong>STUDENT MEMBER (ISTE)</strong>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">THE INDIAN SOCIETY FOR TECHNICAL EDUCATION &bull; Jun 2025 TO Jun 2028</div>
+                </div>
+                <a href="HEMAKUMAR P_ise.pdf" target="_blank">TAP TO SEE &nearr;</a>
+            </div>
+            <div class="cert-card">
+                <div>
+                    <strong>Programming in Java</strong>
+                    <div style="font-size: 0.85rem; color: var(--text-muted);">NPTEL &bull; Jul-Oct 2025</div>
+                </div>
+                <a href="Programming In Java.pdf" target="_blank">TAP TO SEE &nearr;</a>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="reveal" style="padding: 4rem 0;">
+            <div class="section-prefix">06 &mdash; ACADEMIC BACKGROUND</div>
+            <h2 class="section-title">Education</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-date">2023 - 2027</span>
+                    <h3 style="margin-top: 0.25rem;">Bachelor of Engineering in Electronics and Communication Engineering</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Prince Shri Venkateswara Padmavathy Engg College.</p>
+                    <p style="font-size: 0.85rem; color: var(--accent-cyan); margin-top: 0.25rem;">Major in Sensor Interfacing</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <span class="timeline-date">2021 - 2023</span>
+                    <h3 style="margin-top: 0.25rem;">Higher Secondary Schooling</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">Shri Saravana Vidhyalaya Matric Hr.sec school.</p>
+                    <p style="font-size: 0.85rem; color: var(--accent-cyan); margin-top: 0.25rem;">Focused on Computer Science modules.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="reveal" style="padding: 4rem 0;">
+            <div class="section-prefix">07 &mdash; LET'S CONNECT</div>
+            <div class="contact-box">
+                <h2 style="font-size: 2.2rem; margin-bottom: 0.5rem;">Got an idea? Let's build it.</h2>
+                <p style="color: var(--text-muted);">Feel free to reach out for collaborations or just a friendly chat!</p>
+                <a href="mailto:hemakumar.p.27.ece@psvpec.in" class="contact-email">hemakumar.p.27.ece@psvpec.in</a>
+                <div class="social-btns">
+                    <a href="https://www.instagram.com/_freaky__kid._?utm_source=qr&igsh=MTY0aWRxbnJiN3BoZw==&igsi=MTY0aWRxbnJiN3BoZw==" target="_blank" class="btn-secondary">Instagram</a>
+                    <a href="https://github.com/hemakumar-ai" target="_blank" class="btn-secondary">GitHub Profile</a>
+                    <a href="https://www.linkedin.com/in/hemakumar-p-844b3a350" target="_blank" class="btn-secondary">LinkedIn Profile</a>
+                    <a href="https://leetcode.com/u/Hemakumar_P/" target="_blank" class="btn-secondary">Leet Code Profile</a>
+                    <a href="HEMAKUMAR_P.pdf" download="HEMAKUMAR_P.pdf" class="btn-primary">Download Resume &darr;</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        &copy; 2026 HEMAKUMAR P &bull; B.E. Electronics and Communication Engineering
+    </footer>
+
+    <!-- Scroll Reveal Logic -->
+    <script>
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            for (let i = 0; i < reveals.length; i++) {
+                const windowHeight = window.innerHeight;
+                const elementTop = reveals[i].getBoundingClientRect().top;
+                const elementVisible = 80;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', reveal);
+        reveal();
+    </script>
+</body>
+</html>
